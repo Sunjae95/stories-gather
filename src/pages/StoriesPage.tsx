@@ -1,11 +1,13 @@
 import React from 'react';
-import Story from 'components/Story';
-import { getCategoryUrl } from 'utils';
+import { getCategoryUrl, getMB } from 'utils';
 import { useFetchData } from 'hooks/fecthData.hook';
 import styled from '@emotion/styled';
+import { useParams } from 'react-router-dom';
+import Item from 'components/Item';
 
-const TopStories = () => {
-  const url = getCategoryUrl('topstories');
+const StoriesPage = () => {
+  const params = useParams();
+  const url = getCategoryUrl(params.title as string);
   const stories = useFetchData({ url, initialState: [] });
 
   if (!stories.length) return null;
@@ -15,7 +17,7 @@ const TopStories = () => {
       {stories &&
         stories
           .sort((a, b) => b - a)
-          .map((story) => <Story key={story} id={story} />)}
+          .map((story) => <Item key={story} id={story} style={getMB(16)} />)}
     </StyleStories>
   );
 };
@@ -23,8 +25,8 @@ const TopStories = () => {
 const StyleStories = styled.div`
   padding: 60px 160px 0 160px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 `;
 
-export default TopStories;
+export default StoriesPage;

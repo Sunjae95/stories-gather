@@ -9,7 +9,7 @@ const Navigation: React.FC = () => {
   return (
     <StyleNavigation>
       {categoryItems.map((categoryItem, i) => (
-        <Link key={i} to={`/${categoryItem}`}>
+        <Link key={categoryItem} to={`/stories/${categoryItem}`}>
           <Text color="white" size="large">
             {categoryItem.toLocaleUpperCase()}
           </Text>

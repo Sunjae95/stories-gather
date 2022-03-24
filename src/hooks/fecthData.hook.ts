@@ -21,7 +21,7 @@ export const useFetchData = <T>({
     };
 
     fetchData();
-  }, []);
+  }, [url]);
 
   return data;
 };

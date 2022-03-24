@@ -8,7 +8,7 @@ import Item from 'components/Item';
 const StoriesPage = () => {
   const params = useParams();
   const url = getCategoryUrl(params.title as string);
-  const stories = useFetchData({ url, initialState: [] });
+  const stories = useFetchData<number[]>({ url, initialState: [] });
 
   if (!stories.length) return null;
 

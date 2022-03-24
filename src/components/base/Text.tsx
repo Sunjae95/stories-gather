@@ -8,12 +8,14 @@ export interface TextProps {
   size?: 'medium' | 'large' | 'xLarge';
   color?: 'white' | 'purple';
   children: React.ReactChild;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const Text: React.FC<TextProps> = ({
   type = 'content',
   size,
   color,
+  onClick,
   children,
 }) => {
   return (
@@ -21,6 +23,7 @@ const Text: React.FC<TextProps> = ({
       as={type === 'content' ? 'span' : 'h1'}
       size={size}
       color={color}
+      onClick={onClick}
     >
       {children}
     </StyleText>

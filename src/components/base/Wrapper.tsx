@@ -3,14 +3,20 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 export interface WrapperProps {
-  width: number;
-  height: number;
-  children: React.ReactChild;
+  width?: number;
+  height?: number;
+  children: React.ReactNode;
+  [props: string]: any;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ width, height, children }) => {
+const Wrapper: React.FC<WrapperProps> = ({
+  width,
+  height,
+  children,
+  ...props
+}) => {
   return (
-    <StyleWrapper width={width} height={height}>
+    <StyleWrapper width={width} height={height} {...props}>
       {children}
     </StyleWrapper>
   );
@@ -18,10 +24,11 @@ const Wrapper: React.FC<WrapperProps> = ({ width, height, children }) => {
 
 const StyleWrapper = styled.div<WrapperProps>`
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   ${({ width, height }) => css`
-    width: ${width}px;
-    height: ${height}px;
+    width: ${width ? `${width}px` : 'auto'};
+    height: ${height ? `${height}px` : 'auto'};
   `}
 `;
 

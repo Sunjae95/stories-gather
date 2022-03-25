@@ -1,12 +1,11 @@
-import { css } from '@emotion/react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { useFetchData } from 'hooks/fecthData.hook';
-import React, { createElement, useEffect, useState } from 'react';
 import { ItemType } from 'stores/types';
 import theme from 'styles/theme';
 import { getItemUrl, getMB } from 'utils';
 import Text from './base/Text';
-import Wrapper from './base/Wrapper';
+import { comment } from 'constant';
 
 interface CommentProps {
   id: number;
@@ -29,7 +28,7 @@ const Comment: React.FC<CommentProps> = ({ id, isChild }) => {
             style={{ display: 'block', width: '25px', marginBottom: '8px' }}
             color="purple"
           >
-            댓글
+            {comment.prime}
           </Text>
         )}
         {item?.by && (
@@ -44,7 +43,7 @@ const Comment: React.FC<CommentProps> = ({ id, isChild }) => {
         {item?.kids && (
           <OpenText onClick={() => setIsOpen(!isOpen)}>
             <Text color="purple" type="title">
-              {isOpen ? '대 댓글닫기' : '대 댓글열기'}
+              {isOpen ? comment.close : comment.open}
             </Text>
           </OpenText>
         )}

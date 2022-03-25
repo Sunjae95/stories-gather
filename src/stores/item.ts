@@ -10,6 +10,6 @@ export const itemState: ItemType = {
 };
 
 export const clickedItemInfo = atom({
-  key: 'UserInfo',
+  key: 'clickedItemInfo',
   default: itemState,
 });

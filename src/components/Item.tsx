@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import styled from '@emotion/styled';
 import theme from 'styles/theme';
@@ -10,6 +11,7 @@ import { useRecoilState } from 'recoil';
 import { clickedItemInfo } from 'stores/item';
 import { useNavigate, useParams } from 'react-router-dom';
 import UrlLink from './base/UrlLink';
+import { detail } from 'constant';
 
 interface StoryProps {
   id: number;
@@ -35,7 +37,7 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
         <StyleJob onClick={handleDetailPage} {...props}>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
-              이름
+              {detail.name}
             </Text>
             <Text type="content" size="medium">
               {item.by}
@@ -43,19 +45,19 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
           </Wrapper>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
-              URL
+              {detail.url}
             </Text>
             <Text type="content" size="medium">
               {item.url ? (
-                <UrlLink href={item.url}>링크 바로가기</UrlLink>
+                <UrlLink href={item.url}>{detail.goLink}</UrlLink>
               ) : (
-                '링크없음'
+                `${detail.noLink}`
               )}
             </Text>
           </Wrapper>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
-              작성시기
+              {detail.date}
             </Text>
             <Text type="content" size="medium">
               {getTime(item.time)}
@@ -63,7 +65,7 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
           </Wrapper>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
-              소개
+              {detail.intro}
             </Text>
             <Text type="content" size="medium">
               {item.title}
@@ -74,14 +76,14 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
         <StyleItem onClick={handleDetailPage} {...props}>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
-              제목
+              {detail.title}
             </Text>
             <Text type="content" size="medium">
               {item.title}
             </Text>
           </Wrapper>
           <Wrapper style={getMB(16)}>
-            <Text type="title">작성자</Text>
+            <Text type="title">{detail.writer}</Text>
             <Text type="content">{item.by}</Text>
           </Wrapper>
         </StyleItem>

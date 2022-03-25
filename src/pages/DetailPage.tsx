@@ -7,10 +7,11 @@ import { useRecoilValue } from 'recoil';
 import { clickedItemInfo } from 'stores/item';
 import UrlLink from 'components/base/UrlLink';
 import Comment from 'components/Comment';
+import { comment, detail } from 'constant';
 
 const DetailPage: React.FC = () => {
   const item = useRecoilValue(clickedItemInfo);
-  console.log(item);
+
   return (
     <StyleDetailPage>
       <StyleContainer>
@@ -18,29 +19,29 @@ const DetailPage: React.FC = () => {
           {item.title}
         </Text>
         <Wrapper style={getMB(8)}>
-          <Text type="title">작성자</Text>
+          <Text type="title">{detail.writer}</Text>
           <Text type="content">{item.by}</Text>
         </Wrapper>
         <Wrapper style={getMB(8)}>
-          <Text type="title">작성날짜</Text>
+          <Text type="title">{detail.date}</Text>
           <Text type="content">{getTime(item.time)}</Text>
         </Wrapper>
         <Wrapper style={getMB(8)}>
-          <Text type="title">기사URL</Text>
+          <Text type="title">{detail.writeUrl}</Text>
           <Text type="content" size="medium">
             {item.url ? (
-              <UrlLink href={item.url}>링크 바로가기</UrlLink>
+              <UrlLink href={item.url}>{detail.goLink}</UrlLink>
             ) : (
-              '링크없음'
+              `${detail.noLink}`
             )}
           </Text>
         </Wrapper>
         <Wrapper style={getMB(60)}>
-          <Text type="title">점수</Text>
+          <Text type="title">{detail.score}</Text>
           <Text type="content">{item.score ? item.score : 0}</Text>
         </Wrapper>
         <Wrapper style={getMB(16)}>
-          <Text type="title">총 댓글 수</Text>
+          <Text type="title">{comment.total}</Text>
           <Text type="content">{item.descendants ? item.descendants : 0}</Text>
         </Wrapper>
         {item.kids?.map((id) => (

@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import theme from 'styles/theme';
 import { ItemType } from 'stores/types';
 import Text from './base/Text';
 import Wrapper from './base/Wrapper';
-import { getItemUrl, getTime, getMB } from 'utils';
-import { useFetchData } from 'hooks/fecthData.hook';
-import { useRecoilState } from 'recoil';
-import { clickedItemInfo } from 'stores/item';
+import { getTime, getMB } from 'utils';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { clickedItemInfo, itemState } from 'stores/item';
 import { useNavigate, useParams } from 'react-router-dom';
 import UrlLink from './base/UrlLink';
+import { storiesAtom } from 'stores/stories';
 
 interface StoryProps {
-  id: number;
+  id: string;
   [props: string]: any;
-  onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
 }
 
-const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
-  const url = getItemUrl(id);
+const Item = React.forwardRef<
+  HTMLDivElement,
+  React.PropsWithChildren<StoryProps>
+>(({ id, ...props }, ref) => {
   const params = useParams();
   const navigate = useNavigate();
-  const item = useFetchData<ItemType | null>({ url, initialState: null });
-  const [itemInfo, setItemInfo] = useRecoilState(clickedItemInfo);
+  const storiesInfo = useRecoilValue(storiesAtom);
+  const item = storiesInfo[Number(id)];
   const handleDetailPage = (e: React.MouseEvent<HTMLElement>) => {
-    setItemInfo(item as ItemType);
-    navigate(`/stories/${params.title}/${id}`);
+    navigate(`/stories/${params.title}/${item.id}`);
   };
-  if (!item) return <StyleItem>불러오는중</StyleItem>;
+  if (!storiesInfo.length)
+    return (
+      <StyleItem id={id} ref={ref} {...props}>
+        불러오는중
+      </StyleItem>
+    );
 
   return (
     <>
       {item.type === 'job' ? (
-        <StyleJob onClick={handleDetailPage} {...props}>
+        <StyleJob id={id} onClick={handleDetailPage} ref={ref} {...props}>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
               이름
@@ -71,7 +76,7 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
           </Wrapper>
         </StyleJob>
       ) : (
-        <StyleItem onClick={handleDetailPage} {...props}>
+        <StyleItem id={id} onClick={handleDetailPage} ref={ref} {...props}>
           <Wrapper style={getMB(16)}>
             <Text type="title" size="medium">
               제목
@@ -88,7 +93,7 @@ const Item: React.FC<StoryProps> = ({ id, onClick, ...props }) => {
       )}
     </>
   );
-};
+});
 
 const StyleItem = styled.div`
   display: flex;
